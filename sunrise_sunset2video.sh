@@ -1,20 +1,24 @@
 #!/bin/bash
-# this script should run daily and look for a folder from the previous day
-# in the folder it creates two lists, sorting the files into either sunrise
+
+# Tina Keil - 08.04.2020
+# This script should run daily and look for a folder from the previous day.
+# In the folder it creates two lists, sorting the files into either sunrise
 # or sunset lists. Then it creates a sunrise and sunset video based on the 
 # files in the respective lists.
-# original format of images = 2560x1920 Pixel (4:3)
-# encoded format will be half the size of original format
+# Original format of images = 2560x1920 Pixel (4:3)
+# Encoded format will be half the size of original format
 
-# dependencies = ffmeg, w3m
-# Note: if cpu does not support hw acceleration and/or is not an Intel cpu
+# Dependencies = ffmeg, w3m
+# Note: if cpu does not support hw acceleration and/or is not an Intel CPU
 # it will be necessary to change the ffmeg command line to libx264 or other
-# supported software codecs 
+# supported software codecs. Tested with i5-8400 runing Arch Linux.
 
 make_vid=1 # 1 = create videos, 0 = do not create videos
 
+#location for sunrise/sunset api call
 lat=48.89816
 lng=8.671611
+
 yd1=$(date -d "yesterday" +"%Y-%m-%d")
 yd2=$(date -d "yesterday" +"%Y%m%d")
 folder1="/mnt/server/ftp/birdcam2/${yd2}/images"
