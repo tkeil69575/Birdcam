@@ -13,7 +13,7 @@
 # Original format of images = 2560x1920 Pixel (4:3)
 # Encoded format will be half the size of original format
 
-# Dependencies = ffmpeg (full version for hwaccel), w3m
+# Dependencies = ffmeg, w3m
 # Note: if cpu does not support hw acceleration and/or is not an Intel CPU
 # it will be necessary to change the ffmeg command line to libx264 or other
 # supported software codecs. Tested with i5-8400 runing Arch Linux.
@@ -26,7 +26,7 @@ lng=8.671611
 
 yd1=$(date -d "yesterday" +"%Y-%m-%d")
 yd2=$(date -d "yesterday" +"%Y%m%d")
-folder1="/mnt/server/ftp/birdcam2/${yd2}/images"
+folder1="/mnt/server/ftp/birdcam2/${yd2}"
 folder2="/mnt/server/media/Videos/Home Movies/Birds/sunrise_sunset"
 
 #result in UTC time, so need to convert to local time
@@ -47,7 +47,7 @@ sunset_end=$(date -d "$sunset UTC + 60 minutes"  +"%H:%M:%S")
 #frames per second
 fps=50
 
-if [[ -f "${folder1}/files_sunrise.txt" || -f "${folder1}/files_sunset.txt" ]]; then
+if [[ -f "${folder1}/images/files_sunrise.txt" || -f "${folder1}/images/files_sunset.txt" ]]; then
 
   echo "please delete file lists first"
   exit
@@ -59,7 +59,7 @@ else
   echo "sunrise (${sunrise_begin} and ${sunrise_end}) and"
   echo "sunset (${sunset_begin} and ${sunset_end})"
     
-  for file in `ls -tr $folder1/*.jpg`; do
+  for file in `ls -tr $folder1/images/*.jpg`; do
   
     filedate=$(stat --format "%y" ${file})
     
@@ -75,10 +75,10 @@ else
     #add images to sunrise or sunset file list
     if [[ (${filetime} > ${sunrise_begin1}) && (${filetime} < ${sunrise_end1}) ]]; then
       #echo "${filetime} > ${sunrise_begin1}"
-      echo file "'"${file}"'" >> ${folder1}/files_sunrise.txt
+      echo file "'"${file}"'" >> ${folder1}/images/files_sunrise.txt
     elif [[ (${filetime} > ${sunset_begin1}) && (${filetime} < ${sunset_end1}) ]]; then 
       #echo "${filetime} > ${sunset_begin1}"
-      echo file "'"${file}"'" >> ${folder1}/files_sunset.txt
+      echo file "'"${file}"'" >> ${folder1}/images/files_sunset.txt
     fi
   done
   
@@ -95,14 +95,14 @@ else
     if [[ ${make_vid} == 1 ]]; then
       #create sunrise video with vaapi hardware acceleration
       echo "creating video for sunrise"
-      ffmpeg -f concat -safe 0 -threads 1 -i ${folder1}/files_sunrise.txt -an -framerate ${fps} -vaapi_device /dev/dri/renderD128 -vcodec h264_vaapi -vf format='nv12|vaapi,hwupload,scale_vaapi=iw/2:ih/2' "${folder2}/sunrise_${yd1}.mp4"
+      ffmpeg -f concat -safe 0 -threads 1 -i ${folder1}/images/files_sunrise.txt -an -framerate ${fps} -vaapi_device /dev/dri/renderD128 -vcodec h264_vaapi -vf format='nv12|vaapi,hwupload,scale_vaapi=iw/2:ih/2' "${folder2}/sunrise_${yd1}.mp4"
   
       echo "~~~~"
       sleep5
   
       #create sunset video with vaapi hardware acceleration
       echo "creating video for sunset"
-      ffmpeg -f concat -safe 0 -threads 1 -i ${folder1}/files_sunset.txt -an -framerate ${fps} -vaapi_device /dev/dri/renderD128 -vcodec h264_vaapi -vf format='nv12|vaapi,hwupload,scale_vaapi=iw/2:ih/2' "${folder2}/sunset_${yd1}.mp4"
+      ffmpeg -f concat -safe 0 -threads 1 -i ${folder1}/images/files_sunset.txt -an -framerate ${fps} -vaapi_device /dev/dri/renderD128 -vcodec h264_vaapi -vf format='nv12|vaapi,hwupload,scale_vaapi=iw/2:ih/2' "${folder2}/sunset_${yd1}.mp4"
     fi
     
   fi
