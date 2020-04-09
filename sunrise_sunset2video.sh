@@ -1,6 +1,11 @@
 #!/bin/bash
 
 # Tina Keil - 08.04.2020
+
+# Takes images created by 5MP IP-Camera in 5 sec. intervals during preset 
+# time periods. The cam uploads the images to a local network directory
+# via ftp.
+
 # This script should run daily and look for a folder from the previous day.
 # In the folder it creates two lists, sorting the files into either sunrise
 # or sunset lists. Then it creates a sunrise and sunset video based on the 
