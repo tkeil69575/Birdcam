@@ -13,9 +13,9 @@
 # Original format of images = 2560x1920 Pixel (4:3)
 # Encoded format will be half the size of original format
 
-# Dependencies = ffmeg, w3m
+# Dependencies = ffmpeg (full version for hwaccel), w3m
 # Note: if cpu does not support hw acceleration and/or is not an Intel CPU
-# it will be necessary to change the ffmeg command line to libx264 or other
+# it will be necessary to change the ffmpeg command line to libx264 or other
 # supported software codecs. Tested with i5-8400 runing Arch Linux.
 
 make_vid=1 # 1 = create videos, 0 = do not create videos
