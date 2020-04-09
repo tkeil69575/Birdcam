@@ -4,6 +4,7 @@
 # or sunset lists. Then it creates a sunrise and sunset video based on the 
 # files in the respective lists.
 # original format of images = 2560x1920 Pixel (4:3)
+# encoded format will be half the size of original format
 
 # dependencies = ffmeg, w3m
 # Note: if cpu does not support hw acceleration and/or is not an Intel cpu
@@ -101,5 +102,5 @@ fi
 
 if [[ -f "${folder2}/sunrise_${yd1}.mp4" &&  -f "${folder2}/sunset_${yd1}.mp4" ]]; then
   echo "deleting birdcam folder of the day..."
-  #rm -R ${folder1}
+  rm -R ${folder1}
 fi
