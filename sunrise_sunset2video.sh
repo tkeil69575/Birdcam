@@ -5,6 +5,11 @@
 # files in the respective lists.
 # original format of images = 2560x1920 Pixel (4:3)
 
+# dependencies = ffmeg, w3m
+# Note: if cpu does not support hw acceleration and/or is not an Intel cpu
+# it will be necessary to change the ffmeg command line to libx264 or other
+# supported software codecs 
+
 make_vid=1 # 1 = create videos, 0 = do not create videos
 
 lat=48.89816
@@ -94,7 +99,7 @@ else
 
 fi
 
-if [[ -f "${folder2}/sunset_${yd1}.mp4" ]]; then
-  echo "deleting images..."
+if [[ -f "${folder2}/sunrise_${yd1}.mp4" &&  -f "${folder2}/sunset_${yd1}.mp4" ]]; then
+  echo "deleting birdcam folder of the day..."
   #rm -R ${folder1}
 fi
