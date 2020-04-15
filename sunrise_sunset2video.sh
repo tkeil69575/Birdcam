@@ -26,6 +26,8 @@ lng=8.671611
 
 yd1=$(date -d "yesterday" +"%Y-%m-%d")
 yd2=$(date -d "yesterday" +"%Y%m%d")
+#yd1="2020-04-10"
+#yd2="20200410"
 folder1="/mnt/server/ftp/birdcam2/${yd2}"
 folder2="/mnt/server/media/Videos/Home Movies/Birds/sunrise_sunset"
 
@@ -55,7 +57,7 @@ if [[ -f "${folder1}/images/files_sunrise.txt" || -f "${folder1}/images/files_su
 else
 
   #create file list
-  echo "Creating list of images for"
+  echo "Creating list of images for $yd1"
   echo "sunrise (${sunrise_begin} and ${sunrise_end}) and"
   echo "sunset (${sunset_begin} and ${sunset_end})"
     
@@ -111,5 +113,5 @@ fi
 
 if [[ -f "${folder2}/sunrise_${yd1}.mp4" &&  -f "${folder2}/sunset_${yd1}.mp4" ]]; then
   echo "deleting birdcam folder of the day..."
-  rm -R ${folder1}
+  rm -R "${folder1}/images"
 fi
